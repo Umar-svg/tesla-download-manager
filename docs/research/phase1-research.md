@@ -73,6 +73,7 @@ Not observed yet, left for Phase 8 against TDM itself: behaviour on no-Range ser
 | D8 | Streaming writes: each connection writes into a preallocated sparse file at its offset through a bounded async write queue. Persist segment progress to SQLite every ≤1 s or every 4 MiB. | Spec plus resume needs. |
 | D9 | After completion, compute SHA-256 (streaming) and compare it with the expected hash if one was given. Always store it. | Finding 7 method. Spec. |
 | D10 | Do **not** copy IDM's identity: TDM sends its own `User-Agent: TeslaDM/<ver>`, with an optional per-site override. | Clean-room rule. |
+| D10 (revised 2026-11-11, 0.1.2) | Send a standard browser-compatible User-Agent with ` TeslaDM/<ver>` appended (not IDM's string). Reason: download servers pick the file from the UA; Brave's Windows link sent the product-only UA to `brave.com/linux/`, a web page. Verified: with the new UA both Brave links return `BraveBrowserSetup*.exe`. | Field report from the owner + measured with curl. |
 
 ## Toolchain check (2026-11-10)
 

@@ -3,5 +3,12 @@
 namespace tdm {
 inline constexpr const char* kProductName = "Tesla Download Manager";
 inline constexpr const char* kVersion = "@PROJECT_VERSION@";
-inline constexpr const char* kUserAgent = "TeslaDM/@PROJECT_VERSION@";
+inline constexpr const char* kProductToken = "TeslaDM/@PROJECT_VERSION@";
+// Browser-compatible User-Agent with our product token appended. Many download
+// servers choose the file from the User-Agent (e.g. Brave's download links send
+// a product-only UA such as "TeslaDM/0.1.1" to their Linux *web page*), so a
+// product-only UA breaks real downloads. The appended token still identifies us.
+inline constexpr const char* kUserAgent =
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/130.0.0.0 Safari/537.36 TeslaDM/@PROJECT_VERSION@";
 }  // namespace tdm

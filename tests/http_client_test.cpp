@@ -344,3 +344,18 @@ TEST_F(HttpClientTest, TlsRejectsUntrustedCertificate) {
     EXPECT_TRUE(r.ec);
     EXPECT_FALSE(r.got_head);
 }
+
+// Regression (0.1.2): a product-only User-Agent made Brave's download link
+// redirect to its Linux web page. The default UA must be browser-compatible
+// and still carry the TeslaDM token, as seen by the server.
+TEST_F(HttpClientTest, DefaultUserAgentIsBrowserCompatibleOnTheWire) {
+    ASSERT_FALSE(run(*client_, req("/f/ua-check.bin?size=10")).ec);
+    const auto log = run(*client_, req("/admin/log"), true).body;
+    const auto at = log.rfind("ua-check.bin");
+    ASSERT_NE(at, std::string::npos);
+    const auto ua_at = log.find("\"User-Agent\": \"", at);
+    ASSERT_NE(ua_at, std::string::npos);
+    const auto ua = log.substr(ua_at + 15, log.find('"', ua_at + 15) - (ua_at + 15));
+    EXPECT_TRUE(ua.starts_with("Mozilla/5.0 (Windows NT 10.0; Win64; x64)")) << ua;
+    EXPECT_NE(ua.find("TeslaDM/"), std::string::npos) << ua;
+}

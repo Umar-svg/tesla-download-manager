@@ -163,6 +163,17 @@ Verification on 2026-11-11:
 - Real link: `tdm-cli get https://www.youtube.com/watch?v=A5mURRozXtg` → Failed with the web-page error, 0 files saved.
 - Version bumped to 0.1.1, so the published installer contains this fix.
 
+## 0.1.2 (2026-11-11): browser-compatible User-Agent
+- Reported by the owner (on another device, running 0.1.1): Brave's "Get Brave for Windows" link gave "the link is a web page". Measured with curl: `laptop-updates.brave.com/download/BRV002` redirects a product-only UA (`TeslaDM/0.1.1`, even with a Windows comment) to `https://brave.com/linux/` (text/html), and a Windows Chrome UA to `BraveBrowserSetup-BRV002.exe`. The web-page detection was right; the UA was the cause.
+- Fix: `kUserAgent` = Windows Chrome UA + ` TeslaDM/<ver>` (`kProductToken` keeps the bare token). Research decision D10 revised and documented.
+- Tests: `Headers.Compile` (UA shape) and `HttpClientTest.DefaultUserAgentIsBrowserCompatibleOnTheWire` (UA as logged by the server).
+- Real checks: tdm-cli (build and installed 0.1.2) downloaded `BraveBrowserSetup-BRV002.exe`, 1,276,256 bytes, MZ header, Authenticode Valid (Brave Software, Inc.); the YouTube watch page is still reported as a web page.
+- Matrix: engine 120/120 and UI 16/16 in Release and Debug, 0 warnings. Installer `TeslaDM-0.1.2-setup.exe` SHA-256 fe2bb364...4c9c; silent install/uninstall OK.
+
+## Next (approved by the owner on 2026-11-11)
+1. Torrents (magnet + .torrent) via libtorrent 2.1.2 from vcpkg (building), with offline tests (local seeder ↔ leecher).
+2. Video sites via an optional, user-installed yt-dlp (+ ffmpeg for merging); DRM services never; rights reminder in the app.
+
 ## Remaining
 Decisions for the owner:
 - the project's own license (the repository is public but has no license, so others have no permission to reuse the code)

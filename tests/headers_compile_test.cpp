@@ -12,5 +12,8 @@ TEST(Headers, Compile) {
     h.headers.push_back({"Content-Length", "10"});
     ASSERT_NE(h.find("content-length"), nullptr);
     EXPECT_EQ(*h.find("CONTENT-LENGTH"), "10");
-    EXPECT_EQ(std::string(tdm::kUserAgent), std::string("TeslaDM/") + tdm::kVersion);
+    const std::string ua = tdm::kUserAgent;
+    EXPECT_TRUE(ua.starts_with("Mozilla/5.0 (Windows NT 10.0; Win64; x64)")) << ua;  // browser-compatible
+    EXPECT_TRUE(ua.ends_with(std::string(" TeslaDM/") + tdm::kVersion)) << ua;      // still identifies us
+    EXPECT_EQ(std::string(tdm::kProductToken), std::string("TeslaDM/") + tdm::kVersion);
 }
