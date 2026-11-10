@@ -8,7 +8,7 @@
 namespace tdm::db {
 namespace {
 
-constexpr int kSchemaVersion = 3;
+constexpr int kSchemaVersion = 4;
 
 constexpr const char* kSchemaV1 = R"sql(
 CREATE TABLE IF NOT EXISTS queues (
@@ -120,7 +120,7 @@ private:
 
 constexpr const char* kDownloadCols =
     "id,url,final_url,file_path,total_size,etag,last_modified,accept_ranges,sha256_expected,"
-    "sha256_actual,state,error,queue_id,priority,created_at,updated_at,directory,file_name,part_path,connections,speed_limit";
+    "sha256_actual,state,error,queue_id,priority,created_at,updated_at,directory,file_name,part_path,connections,speed_limit,allow_web_page";
 
 DownloadRow read_row(const Stmt& s) {
     DownloadRow r;
@@ -145,6 +145,7 @@ DownloadRow read_row(const Stmt& s) {
     r.part_path = s.text(18);
     r.connections = static_cast<int>(s.i64(19));
     r.speed_limit = static_cast<std::uint64_t>(s.i64(20));
+    r.allow_web_page = s.i64(21) != 0;
     return r;
 }
 
@@ -158,6 +159,7 @@ void bind_common(Stmt& s, const DownloadRow& r, std::int64_t updated) {
     s.bind(11, r.error).bind(12, r.queue_id).bind(13, std::int64_t{r.priority}).bind(14, updated);
     s.bind(16, r.directory).bind(17, r.file_name).bind(18, r.part_path).bind(19, std::int64_t{r.connections});
     s.bind(20, static_cast<std::int64_t>(r.speed_limit));
+    s.bind(21, std::int64_t{r.allow_web_page ? 1 : 0});
 }
 
 }  // namespace
@@ -216,6 +218,12 @@ void Store::migrate() {
              "PRAGMA user_version = 3;");
         t.commit();
     }
+    if (v < 4) {
+        Txn t(db_);
+        exec("ALTER TABLE downloads ADD COLUMN allow_web_page INTEGER NOT NULL DEFAULT 0;"
+             "PRAGMA user_version = 4;");
+        t.commit();
+    }
 }
 
 std::int64_t Store::add_download(const DownloadRow& row) {
@@ -223,7 +231,8 @@ std::int64_t Store::add_download(const DownloadRow& row) {
     Stmt s(db_,
            "INSERT INTO downloads(url,final_url,file_path,total_size,etag,last_modified,accept_ranges,"
            "sha256_expected,sha256_actual,state,error,queue_id,priority,updated_at,created_at,directory,file_name,"
-           "part_path,connections,speed_limit) VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15,?16,?17,?18,?19,?20)");
+           "part_path,connections,speed_limit,allow_web_page) "
+           "VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15,?16,?17,?18,?19,?20,?21)");
     bind_common(s, row, now);
     s.bind(15, row.created_at ? row.created_at : now);
     s.step();
@@ -234,7 +243,7 @@ void Store::update_download(const DownloadRow& row) {
     Stmt s(db_,
            "UPDATE downloads SET url=?1,final_url=?2,file_path=?3,total_size=?4,etag=?5,last_modified=?6,"
            "accept_ranges=?7,sha256_expected=?8,sha256_actual=?9,state=?10,error=?11,queue_id=?12,"
-           "priority=?13,updated_at=?14,directory=?16,file_name=?17,part_path=?18,connections=?19,speed_limit=?20 WHERE id=?15");
+           "priority=?13,updated_at=?14,directory=?16,file_name=?17,part_path=?18,connections=?19,speed_limit=?20,allow_web_page=?21 WHERE id=?15");
     bind_common(s, row, now_unix());
     s.bind(15, row.id);
     s.step();

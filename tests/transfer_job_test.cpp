@@ -558,3 +558,31 @@ TEST_F(TransferJobTest, GlobalLimitIsSharedByConcurrentDownloads) {
     EXPECT_EQ(ra.sha256, server_sha("ga.bin", size));
     EXPECT_EQ(rb.sha256, server_sha("gb.bin", size));
 }
+
+// A link that answers with an HTML page (e.g. a video site's watch page) is
+// reported instead of being saved as a file named after the URL.
+TEST_F(TransferJobTest, WebPageIsReportedNotSaved) {
+    for (const char* ctype : {"text/html", "text/html;%20charset=utf-8", "application/xhtml%2Bxml"}) {
+        auto r = run(opts(std::string("/f/watch?size=50000&nodisp=1&ctype=") + ctype));
+        EXPECT_EQ(r.ec, make_error_code(TransferError::web_page)) << ctype << ": " << r.ec.message();
+        EXPECT_EQ(r.bytes_received, 0u);
+    }
+    EXPECT_TRUE(stdfs::is_empty(dir_)) << "nothing may be left behind";
+}
+
+TEST_F(TransferJobTest, WebPageSavedWhenAllowedOrLinkIsHtml) {
+    auto o = opts("/f/watch?size=50000&nodisp=1&ctype=text/html");
+    o.allow_web_page = true;
+    auto allowed = run(o);
+    ASSERT_FALSE(allowed.ec) << allowed.ec.message();
+    EXPECT_EQ(allowed.path, dir_ / "watch.html");  // extension added for a page
+    EXPECT_EQ(allowed.sha256, server_sha("watch", 50000));
+
+    auto doc = run(opts("/f/doc.html?size=4000&ctype=text/html"));  // the link itself names an HTML file
+    ASSERT_FALSE(doc.ec) << doc.ec.message();
+    EXPECT_EQ(doc.path, dir_ / "doc.html");
+
+    auto bin = run(opts("/f/data.bin?size=4000&ctype=application/octet-stream"));
+    ASSERT_FALSE(bin.ec);
+    EXPECT_EQ(bin.path, dir_ / "data.bin");  // ordinary files unaffected
+}

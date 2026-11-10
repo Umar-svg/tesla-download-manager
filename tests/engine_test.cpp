@@ -443,3 +443,31 @@ TEST_F(EngineTest, SixteenConnectionsAreReallyUsed) {
     EXPECT_LE(max_active, 16);
     EXPECT_LT(secs, 1.25);  // 8 connections cannot do it in under ~1.5 s
 }
+
+TEST_F(EngineTest, WebPageLinkFailsClearlyWithoutRetry) {
+    Engine e(options());
+    std::set<db::State> seen;
+    std::mutex m;
+    e.subscribe([&](const Snapshot& s) {
+        std::lock_guard lk(m);
+        seen.insert(s.state);
+    });
+    auto id = e.add(add_req("/f/watch?size=80000&nodisp=1&ctype=text/html"));
+    auto s = wait_for(e, id, done);
+    EXPECT_EQ(s.state, db::State::Failed);
+    EXPECT_NE(s.error.find("web page"), std::string::npos) << s.error;
+    {
+        std::lock_guard lk(m);
+        EXPECT_FALSE(seen.count(db::State::Waiting)) << "a web page must not be retried";
+    }
+    EXPECT_FALSE(stdfs::exists(dir_ / "watch"));
+
+    auto r = add_req("/f/watch?size=80000&nodisp=1&ctype=text/html");
+    r.allow_web_page = true;
+    auto id2 = e.add(r);
+    auto s2 = wait_for(e, id2, done);
+    EXPECT_EQ(s2.state, db::State::Completed) << s2.error;
+    EXPECT_EQ(stdfs::path(s2.file_path), dir_ / "watch.html");
+    e.shutdown();
+    EXPECT_TRUE(row_of(id2).allow_web_page);  // persisted for restarts
+}

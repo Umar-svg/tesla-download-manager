@@ -413,6 +413,16 @@ std::optional<Url> resolve_location(const Url& base, std::string_view location) 
     return parse_url(origin + std::string(dir) + std::string(location));
 }
 
+std::string media_type(std::string_view content_type) {
+    const auto semi = content_type.find(';');
+    return to_lower(trim(content_type.substr(0, semi)));
+}
+
+bool is_web_page_type(std::string_view content_type) {
+    const auto m = media_type(content_type);
+    return m == "text/html" || m == "application/xhtml+xml";
+}
+
 std::string filename_from_url(const Url& url) {
     std::string_view path = url.target;
     if (auto q = path.find('?'); q != std::string_view::npos) path = path.substr(0, q);

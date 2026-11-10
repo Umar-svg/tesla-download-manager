@@ -11,6 +11,8 @@ Behaviours, selected by query string on /f/<name>:
   rate=<bytes/s>      per-connection throttle (makes segmentation visible)
   rate_jitter=1       each request gets a random rate in [rate/4, rate]
   latency_ms=<ms>     wait this long before answering (simulated RTT)
+  ctype=<type>        Content-Type to send (default application/octet-stream)
+  nodisp=1            omit Content-Disposition (name then comes from the URL)
   chunked=1           Transfer-Encoding: chunked, no Content-Length
   busy=<n>            first n GETs for this name get 503 + Retry-After
   retry_after=<s>     value used with busy (default 2)
@@ -207,8 +209,9 @@ class Handler(BaseHTTPRequestHandler):
                 status = 206
 
         self.send_response(status)
-        self.send_header("Content-Type", "application/octet-stream")
-        self.send_header("Content-Disposition", f'attachment; filename="{name}"')
+        self.send_header("Content-Type", q.get("ctype", "application/octet-stream"))
+        if q.get("nodisp") != "1":
+            self.send_header("Content-Disposition", f'attachment; filename="{name}"')
         if validators:
             self.send_header("ETag", etag)
             self.send_header("Last-Modified", lastmod)

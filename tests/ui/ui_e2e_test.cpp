@@ -2,6 +2,7 @@
 // real Engine + real Python probe server. No mocks.
 
 #include <QAction>
+#include <QCheckBox>
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QPushButton>
@@ -244,6 +245,13 @@ TEST_F(UiE2E, AddDialogValidatesAndBuildsRequest) {
     EXPECT_EQ(r.directory, dir_);
     EXPECT_TRUE(r.start_now);
     EXPECT_FALSE(r.speed_limit_bps);
+    EXPECT_FALSE(r.allow_web_page);  // off by default: web pages are reported
+    QCheckBox* allow = nullptr;
+    for (auto* c : ok_dlg.findChildren<QCheckBox*>())
+        if (c->text().contains(QStringLiteral("web page"))) allow = c;
+    ASSERT_NE(allow, nullptr);
+    allow->setChecked(true);
+    EXPECT_TRUE(ok_dlg.request().allow_web_page);
 
     ui::AddDownloadDialog bad(d, queues, QStringLiteral("not a url"));
     EXPECT_FALSE(bad.findChild<QDialogButtonBox*>()->button(QDialogButtonBox::Ok)->isEnabled());

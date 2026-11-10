@@ -25,6 +25,7 @@ struct AddRequest {
     int connections = 8;                 // 1..32
     std::optional<std::uint64_t> speed_limit_bps;
     bool start_now = true;
+    bool allow_web_page = false;         // save an HTML page instead of failing with "web page"
 };
 
 struct SegmentView {

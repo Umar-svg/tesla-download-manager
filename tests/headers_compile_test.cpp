@@ -12,5 +12,5 @@ TEST(Headers, Compile) {
     h.headers.push_back({"Content-Length", "10"});
     ASSERT_NE(h.find("content-length"), nullptr);
     EXPECT_EQ(*h.find("CONTENT-LENGTH"), "10");
-    EXPECT_STREQ(tdm::kUserAgent, "TeslaDM/0.1.0");
+    EXPECT_EQ(std::string(tdm::kUserAgent), std::string("TeslaDM/") + tdm::kVersion);
 }

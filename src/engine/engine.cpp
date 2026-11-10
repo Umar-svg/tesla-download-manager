@@ -181,6 +181,7 @@ DownloadId Engine::add(const AddRequest& req) {
     row.connections = std::clamp(req.connections, 1, 32);
     row.queue_id = req.queue_id;
     row.speed_limit = req.speed_limit_bps.value_or(0);
+    row.allow_web_page = req.allow_web_page;
     row.state = req.start_now ? db::State::Queued : db::State::Paused;
 
     std::vector<Snapshot> snaps;
@@ -242,6 +243,7 @@ void Engine::start_job(DownloadId id, Item& it) {
     o.max_connections = it.row.connections;
     o.min_split = opts_.min_split;
     o.expected_sha256 = it.row.sha256_expected;
+    o.allow_web_page = it.row.allow_web_page;
     o.resume = it.resume;
     o.limiters = {global_bucket_, it.bucket};
     auto holder = std::make_shared<std::weak_ptr<multipart::TransferJob>>();

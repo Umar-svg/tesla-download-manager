@@ -130,3 +130,15 @@ TEST(Url, FilenameFromUrl) {
     EXPECT_EQ(percent_decode("100%"), "100%");
     EXPECT_EQ(percent_decode("%zz%41"), "%zzA");
 }
+
+TEST(ContentType, MediaTypeAndWebPageDetection) {
+    EXPECT_EQ(media_type("Text/HTML; charset=utf-8"), "text/html");
+    EXPECT_EQ(media_type("  application/octet-stream "), "application/octet-stream");
+    EXPECT_TRUE(is_web_page_type("text/html"));
+    EXPECT_TRUE(is_web_page_type("text/html; charset=UTF-8"));
+    EXPECT_TRUE(is_web_page_type("application/xhtml+xml"));
+    EXPECT_FALSE(is_web_page_type("video/mp4"));
+    EXPECT_FALSE(is_web_page_type("application/octet-stream"));
+    EXPECT_FALSE(is_web_page_type("text/plain"));
+    EXPECT_FALSE(is_web_page_type(""));
+}

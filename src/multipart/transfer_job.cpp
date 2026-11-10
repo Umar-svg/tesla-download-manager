@@ -1,6 +1,7 @@
 #include "multipart/transfer_job.hpp"
 
 #include <algorithm>
+#include <cctype>
 #include <thread>
 
 #include "core/http_util.hpp"
@@ -19,6 +20,8 @@ public:
             case TransferError::hash_mismatch: return "SHA-256 does not match the expected value";
             case TransferError::insufficient_space: return "not enough free disk space";
             case TransferError::unexpected_response: return "unexpected server response";
+            case TransferError::web_page:
+                return "the link is a web page, not a downloadable file (open it in a browser, or allow web pages)";
         }
         return "transfer error";
     }
@@ -269,6 +272,21 @@ bool TransferJob::probe_head(Conn& c, const net::ResponseHead& h) {
         if (const auto* cd = h.find("Content-Disposition"))
             if (auto n = core::content_disposition_filename(*cd)) name = *n;
     if (name.empty()) name = core::filename_from_url(final_url_);
+
+    // A web page is not a file: refuse it unless the user asked for pages or
+    // the link itself names an .html/.htm document.
+    const auto* ct = h.find("Content-Type");
+    if (ct && core::is_web_page_type(*ct)) {
+        std::string url_name = core::filename_from_url(final_url_);
+        std::transform(url_name.begin(), url_name.end(), url_name.begin(),
+                       [](unsigned char ch) { return static_cast<char>(std::tolower(ch)); });
+        const bool page_link = url_name.ends_with(".html") || url_name.ends_with(".htm");
+        if (!opts_.allow_web_page && !page_link) {
+            fail(TransferError::web_page);
+            return false;
+        }
+        if (std::filesystem::path(u8path(name)).extension().empty()) name += ".html";
+    }
     file_name_ = core::sanitize_filename(name);
     part_path_ = opts_.directory / u8path(file_name_ + ".tdmpart");
 

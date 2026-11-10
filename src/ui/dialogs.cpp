@@ -85,6 +85,9 @@ AddDownloadDialog::AddDownloadDialog(const UiSettings& d, const std::vector<engi
     sha_->setPlaceholderText(tr("Optional: expected SHA-256 (64 hex digits)"));
     start_now_ = new QCheckBox(tr("Start now"), this);
     start_now_->setChecked(true);
+    allow_page_ = new QCheckBox(tr("Download even if the link is a web page"), this);
+    allow_page_->setToolTip(tr("Links such as a video site's watch page return a web page, not the file. "
+                               "Leave this off to be warned instead."));
     error_ = new QLabel(this);
     error_->setStyleSheet(QStringLiteral("color: #c62828"));
 
@@ -96,6 +99,7 @@ AddDownloadDialog::AddDownloadDialog(const UiSettings& d, const std::vector<engi
     form->addRow(tr("Speed limit:"), limit_);
     form->addRow(tr("SHA-256:"), sha_);
     form->addRow(QString(), start_now_);
+    form->addRow(QString(), allow_page_);
 
     buttons_ = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     connect(buttons_, &QDialogButtonBox::accepted, this, &QDialog::accept);
@@ -132,6 +136,7 @@ engine::AddRequest AddDownloadDialog::request() const {
     if (lim) r.speed_limit_bps = lim;
     r.sha256_expected = toUtf8(sha_->text().trimmed().toLower());
     r.start_now = start_now_->isChecked();
+    r.allow_web_page = allow_page_->isChecked();
     return r;
 }
 

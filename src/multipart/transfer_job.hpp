@@ -48,6 +48,7 @@ enum class TransferError {
     hash_mismatch,        // SHA-256 differs from the expected value
     insufficient_space,
     unexpected_response,  // e.g. 206 to a request without Range
+    web_page,             // the link returned an HTML page, not a file (allow_web_page = false)
 };
 const std::error_category& transfer_category() noexcept;
 inline std::error_code make_error_code(TransferError e) noexcept { return {static_cast<int>(e), transfer_category()}; }
@@ -76,6 +77,12 @@ struct TransferOptions {
     int max_restarts = 3;
     std::size_t write_budget = 64u << 20;
     std::vector<net::Header> extra_headers;
+    // A link that answers with an HTML page (a video site's watch page, a
+    // login or error page...) is reported as TransferError::web_page instead
+    // of being saved under a misleading name. URLs that themselves end in
+    // .html/.htm are always allowed. When allowed, a page whose name has no
+    // extension is saved with ".html".
+    bool allow_web_page = false;
     // Creates the file writer (default: fs::make_file_writer). Tests inject a
     // recording decorator to prove that writes never overlap.
     std::function<std::unique_ptr<fs::FileWriter>(std::size_t budget)> writer_factory;

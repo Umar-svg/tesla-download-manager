@@ -59,4 +59,11 @@ std::string filename_from_url(const Url& url);
 
 std::string percent_decode(std::string_view s);
 
+// Media type of a Content-Type value, lower case, without parameters:
+// "Text/HTML; charset=utf-8" -> "text/html".
+std::string media_type(std::string_view content_type);
+
+// True for HTML/XHTML documents, i.e. a web page rather than a file.
+bool is_web_page_type(std::string_view content_type);
+
 }  // namespace tdm::core

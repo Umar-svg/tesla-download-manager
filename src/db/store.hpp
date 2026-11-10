@@ -46,6 +46,8 @@ struct DownloadRow {
     int connections = 8;
     // schema v3
     std::uint64_t speed_limit = 0;  // bytes/s, 0 = unlimited
+    // schema v4
+    bool allow_web_page = false;    // save HTML pages instead of reporting "web page"
 };
 
 struct QueueRow {

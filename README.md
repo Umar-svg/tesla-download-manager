@@ -2,6 +2,13 @@
 
 An independent, high-performance download manager for Windows, built with C++20, Qt 6, Asio, OpenSSL and SQLite. It uses its own architecture and code: no third-party download-manager code, assets or licensing workarounds.
 
+## Download
+**[Download the latest Windows installer](https://github.com/Umar-svg/tesla-download-manager/releases/latest)**: `TeslaDM-<version>-setup.exe` (Windows 10/11, 64-bit, no administrator rights needed).
+
+- Each release lists the installer's SHA-256 so you can check the download (`Get-FileHash .\TeslaDM-0.1.1-setup.exe`).
+- The installer is not code-signed yet. Windows SmartScreen may say "Windows protected your PC": click **More info → Run anyway**.
+- Tesla DM downloads direct file links. Links to web pages (for example a video site's watch page) are reported as "web page" instead of being saved.
+
 ## Features
 - Segmented downloads with dynamic splitting across up to 32 connections. Each segment is validated with `If-Range` and Content-Range, so bytes from two versions of a file are never mixed.
 - Crash-safe resume: progress is checkpointed only after the data is flushed to disk; SHA-256 is verified on completion.

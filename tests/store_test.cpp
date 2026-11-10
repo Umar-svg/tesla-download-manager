@@ -10,7 +10,7 @@ using namespace tdm::db;
 
 TEST(Store, CreatesLatestSchema) {
     Store s(":memory:");
-    EXPECT_EQ(s.schema_version(), 3);
+    EXPECT_EQ(s.schema_version(), 4);
     EXPECT_TRUE(s.list_downloads().empty());
 }
 
@@ -87,7 +87,7 @@ TEST(Store, PersistsAcrossReopen) {
     }
     {
         Store s(path.string());
-        EXPECT_EQ(s.schema_version(), 3);
+        EXPECT_EQ(s.schema_version(), 4);
         ASSERT_TRUE(s.get_download(id));
         EXPECT_EQ(s.load_segments(id).at(0).pos, 7u);
     }
@@ -146,7 +146,7 @@ TEST(Store, MigratesV1DatabaseToLatest) {
     }
     {
         Store s(path.string());
-        EXPECT_EQ(s.schema_version(), 3);
+        EXPECT_EQ(s.schema_version(), 4);
         auto row = s.get_download(1);
         ASSERT_TRUE(row);
         EXPECT_EQ(row->url, "http://old/file.iso");
@@ -182,4 +182,17 @@ TEST(Store, QueuesCrudAndSpeedLimit) {
     EXPECT_EQ(s.get_download(id)->queue_id, 1);  // moved back to Main
     EXPECT_EQ(s.list_queues().size(), 1u);
     EXPECT_THROW(s.remove_queue(1), DbError);
+}
+
+TEST(Store, AllowWebPageRoundTrip) {
+    Store s(":memory:");
+    DownloadRow r;
+    r.url = "http://x/page";
+    r.allow_web_page = true;
+    const auto id = s.add_download(r);
+    EXPECT_TRUE(s.get_download(id)->allow_web_page);
+    auto got = *s.get_download(id);
+    got.allow_web_page = false;
+    s.update_download(got);
+    EXPECT_FALSE(s.get_download(id)->allow_web_page);
 }

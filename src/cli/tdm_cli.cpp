@@ -1,7 +1,7 @@
 // tdm-cli: command-line front end on the real (Qt-free) Engine.
 //
 //   tdm-cli get [-o DIR] [-c CONNECTIONS] [--max-active N] [--limit BYTES_PER_S]
-//               [--db FILE] [--timeout SECONDS] URL [URL...]
+//               [--db FILE] [--timeout SECONDS] [--allow-web-page] URL [URL...]
 //
 // Downloads every URL through the same Engine the GUI uses (probe, segments,
 // If-Range validation, checkpoints, SHA-256) and prints one JSON object:
@@ -30,7 +30,7 @@ namespace stdfs = std::filesystem;
 int usage() {
     std::fprintf(stderr,
                  "usage: tdm-cli get [-o DIR] [-c CONNECTIONS] [--max-active N] [--limit BYTES_PER_S]\n"
-                 "                   [--db FILE] [--timeout SECONDS] URL [URL...]\n");
+                 "                   [--db FILE] [--timeout SECONDS] [--allow-web-page] URL [URL...]\n");
     return 2;
 }
 
@@ -52,6 +52,7 @@ int main(int argc, char** argv) {
     stdfs::path out_dir = stdfs::current_path();
     stdfs::path db_path;
     int connections = 8, max_active = 8, timeout_s = 3600;
+    bool allow_web_page = false;
     std::uint64_t limit = 0;
     std::vector<std::string> urls;
     try {
@@ -67,6 +68,7 @@ int main(int argc, char** argv) {
             else if (a == "--limit") limit = std::stoull(next());
             else if (a == "--db") db_path = next();
             else if (a == "--timeout") timeout_s = std::stoi(next());
+            else if (a == "--allow-web-page") allow_web_page = true;
             else if (!a.empty() && a[0] == '-') throw std::invalid_argument("unknown option " + a);
             else urls.push_back(a);
         }
@@ -103,6 +105,7 @@ int main(int argc, char** argv) {
             r.url = u;
             r.directory = out_dir;
             r.connections = connections;
+            r.allow_web_page = allow_web_page;
             ids.push_back(e.add(r));
         }
         const auto deadline = t0 + std::chrono::seconds(timeout_s);

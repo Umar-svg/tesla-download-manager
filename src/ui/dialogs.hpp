@@ -45,6 +45,7 @@ private:
     QLineEdit* limit_;
     QLineEdit* sha_;
     QCheckBox* start_now_;
+    QCheckBox* allow_page_;
     QLabel* error_;
     QDialogButtonBox* buttons_;
 };
