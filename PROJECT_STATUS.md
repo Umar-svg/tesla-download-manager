@@ -170,6 +170,25 @@ Verification on 2026-11-11:
 - Real checks: tdm-cli (build and installed 0.1.2) downloaded `BraveBrowserSetup-BRV002.exe`, 1,276,256 bytes, MZ header, Authenticode Valid (Brave Software, Inc.); the YouTube watch page is still reported as a web page.
 - Matrix: engine 120/120 and UI 16/16 in Release and Debug, 0 warnings. Installer `TeslaDM-0.1.2-setup.exe` SHA-256 fe2bb364...4c9c; silent install/uninstall OK.
 
+## Handover (end of 2026-11-11), start here tomorrow
+- Released: v0.1.2 is Latest on GitHub (installer SHA-256 fe2bb364...4c9c). Code is pushed (main = 8e392ac + this status update).
+- In progress, nothing written yet: torrent support. `vcpkg install libtorrent:x64-windows` (2.1.2, default feature webtorrent → Boost + libdatachannel/libjuice...) was compiling in the background; log `build/vcpkg_libtorrent.log`. Re-run it if it did not finish; the binary cache keeps finished packages.
+  - Then add "libtorrent" to vcpkg.json and read the installed headers for the exact 2.1 API (create_torrent changed in 2.1).
+  - libtorrent licenses include BSD-4-Clause (advertising clause) and APSL-2.0: ship their texts and acknowledgements in THIRD_PARTY_NOTICES/licenses.
+- Planned torrent design:
+  - `tdm_torrent` lib with a `TorrentService` owning one lt::session (DHT/LSD/UPnP/NAT-PMP on for real use, off in tests)
+  - magnet + local .torrent; resume data in `<db dir>/torrents/<id>.fastresume`
+  - DB v5 `downloads.kind` (0 http, 1 torrent); the engine maps torrent_status to Snapshot (peers → connections)
+  - pause/resume/remove; global and per-download limits
+  - stop seeding on completion by default
+  - tests: two local sessions on 127.0.0.1 (create a torrent, seed, leech via connect_peer and via magnet metadata), SHA-256 compared
+- Video sites (after torrents): optional yt-dlp integration. Installed via winget here:
+  - yt-dlp: `%LOCALAPPDATA%\Microsoft\WinGet\Packages\yt-dlp.yt-dlp_Microsoft.Winget.Source_8wekyb3d8bbwe\yt-dlp.exe`
+  - ffmpeg: `...\Gyan.FFmpeg_...fmpeg-9.0.2-full_buildinfmpeg.exe` (the yt-dlp package also brought its own ffmpeg)
+  - Discovery order: settings path → PATH → WinGet Packages. Never DRM services; show a rights reminder.
+- App icon: waiting for the owner's own design (square PNG ≥ 512 px, transparent; not Tesla's logo). It goes into the exe (.rc + .ico), the window/tray (qrc) and the installer (SetupIconFile).
+- Owner's earlier wish: "better than IDM", to be shown with measured numbers only.
+
 ## Next (approved by the owner on 2026-11-11)
 1. Torrents (magnet + .torrent) via libtorrent 2.1.2 from vcpkg (building), with offline tests (local seeder ↔ leecher).
 2. Video sites via an optional, user-installed yt-dlp (+ ffmpeg for merging); DRM services never; rights reminder in the app.
