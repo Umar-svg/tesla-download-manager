@@ -108,7 +108,7 @@ Backoff: `min(cap, base·2^attempt) × U[1−jitter, 1]`, with base 500 ms, cap 
 6. Queue, scheduler and bandwidth limits ✅
 7. Qt UI ✅
 8. Test-server scenarios and real benchmarks, compared with curl (and with IDM only if the user agrees) ✅ (see docs/benchmarks/)
-9. Windows installer (Inno Setup or NSIS) with `windeployqt`
+9. Windows installer (Inno Setup or NSIS) with `windeployqt` ✅ (Inno Setup, per-user; `scripts/package.ps1`)
 
 ## Build
 

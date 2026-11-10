@@ -1,9 +1,9 @@
 # PROJECT_STATUS: Tesla Download Manager
 
-Updated: 2026-11-10
+Updated: 2026-11-11
 
 ## Current phase
-Phase 9 (Windows installer) is IN PROGRESS. The installer is built and its install/run/uninstall cycle is verified. One robustness fix (finalize retry on sharing violations) is written but its verification run was interrupted: re-run the tests first (see "Phase 9 status").
+All nine phases are done and verified (2026-11-11). Remaining items are product decisions and follow-ups (see "Remaining").
 
 ## Completed
 - Phase 1: research doc `docs/research/phase1-research.md` (black-box IDM probe, decisions D1–D10); probe server `tools/testserver/probe_server.py`
@@ -137,7 +137,7 @@ Done and verified:
   - the installed GUI and CLI ran with a minimal PATH (SHA OK)
   - silent uninstall exit 0 removed the folder, shortcuts and key; user data was kept
 
-Found while running the full matrix, fixed, NOT YET RE-VERIFIED (the run was interrupted):
+Found while running the full matrix, fixed and verified on 2026-11-11:
 1. **Product defect:** `FileWriter::finalize` failed at once with ERROR_SHARING_VIOLATION when another handle without FILE_SHARE_DELETE (antivirus, indexer, previewer) had the part file open. A complete download became a "disk error".
    - Regression test `FileWriterSharing.FinalizeWaitsForAnotherReaderToLetGo` reproduces it on the old code ("being used by another process").
    - Fix: retry the rename with backoff (25 ms up to 400 ms steps, about 10.7 s in total) on sharing, access-denied or lock violations.
@@ -145,19 +145,27 @@ Found while running the full matrix, fixed, NOT YET RE-VERIFIED (the run was int
    - Fix: the helpers use their own pool.
    - A pacing workaround tried first was based on a wrong diagnosis and was removed.
 
-Not done:
-- LGPL-3.0/GPL-3.0 license texts for Qt: gnu.org was unreachable from this network (connect timeouts); `installer/licenses/` is empty and the notices give the official URLs.
-- Full Release/Debug matrix after the two fixes above.
-- The project's own license (owner's decision).
+Verification on 2026-11-11:
+- `FileWriterSharing.*` (both tests) and `LiveCheckpointIsAValidCrashRecoveryPoint` passed 5/5 with `--gtest_repeat=5` (`build/sharing_fix.log`). The pacing workaround is gone, so the checkpoint test runs unpaced again.
+- Full matrix: see "Build / test" (engine 114/114, UI 16/16, Release and Debug).
+- License texts: gnu.org was still unreachable (connect timeouts). With the owner's approval, `installer/licenses/LGPL-3.0.txt` (7,651 bytes) and `GPL-3.0.txt` (35,147 bytes) were taken from Qt's own `qtbase/LICENSES` on GitHub and checked to be the "Version 3, 29 June 2007" texts.
+- `scripts/package.ps1` rebuilt `TeslaDM-0.1.0-setup.exe` (13.5 MB; dependency check 348 imports OK).
+- Silent install exit 0 (40 files, 6 license texts). The installed GUI ran with PATH = System32 only; a second launch handed off and exited 0; the GUI exited 0; the installed tdm-cli passed the SHA-verified quick benchmark. Silent uninstall exit 0 removed the folder, Start-menu entries and uninstall key.
 
 ## Remaining
-- Phase 9: re-verify (run `FileWriterSharing*`, `*LiveCheckpoint*` ×5, then `ctest -L engine` and `-L ui` in Release and Debug), add the LGPL/GPL texts, rebuild the installer
+Decisions for the owner:
+- the project's own license (the repository is public but has no license, so others have no permission to reuse the code)
+- the product name ("Tesla" is a trademark)
+
+Follow-ups (not started):
+- code signing for the installer and executables (unsigned builds trigger SmartScreen warnings)
+- automatic updates
+- browser integration (extension or native messaging) beyond `TeslaDM.exe <url>`
+- performance items from `docs/benchmarks/analysis-2026-11-10.md`
+- a benchmark against real internet servers, and against IDM only with the owner's agreement
 
 ## Exact next steps
-1. `.\scripts\build.ps1` then `build\msvc-release\tests\tdm_tests.exe --gtest_filter=FileWriterSharing*:*LiveCheckpoint* --gtest_repeat=5`.
-2. `ctest --test-dir build/msvc-release -L engine` and `-L ui`; the same for `build/msvc-debug`.
-3. Put `LGPL-3.0.txt` and `GPL-3.0.txt` (from gnu.org) into `installer/licenses/`.
-4. `.\scripts\package.ps1` and repeat the silent install/run/uninstall check.
+None required. Pick from "Remaining". To ship a build: `.\scripts\package.ps1` → `build\msvc-release\installer\TeslaDM-<ver>-setup.exe`.
 
 ## Key decisions
 - Engine is Qt-free; UI talks to `engine::DownloadEngine` only.
@@ -219,13 +227,13 @@ Environment needs for the 1 GiB tests: ≥ 2 GiB free in `%TEMP%` (each test del
 
 ## Build / test
 `.\scripts\build.ps1 [-Preset msvc-debug] [-NoTest]`.
-Last result (2026-11-10, Phase 8), engine and UI run separately by ctest label:
+Last result (2026-11-11, Phase 9 complete), engine and UI run separately by ctest label:
 | | engine (`ctest -L engine`, incl. `bench_quick`) | UI (`ctest -L ui`, offscreen) |
 |---|---|---|
-| Release | **112/112**, 99 s (`build/ctest_release_engine.log`) | **14/14**, 5.9 s (`build/ctest_release_ui.log`) |
-| Debug | **112/112**, 97 s (`build/ctest_debug_engine.log`) | **14/14**, 6.3 s (`build/ctest_debug_ui.log`) |
+| Release | **114/114**, 104 s (`build/ctest_release_engine.log`) | **16/16**, 6.3 s (`build/ctest_release_ui.log`) |
+| Debug | **114/114**, 99 s (`build/ctest_debug_engine.log`) | **16/16**, 6.7 s (`build/ctest_debug_ui.log`) |
 
-Builds have 0 compiler warnings at /W4 (Phase 8 builds checked again). In Phase 7 the UI suite also passed 3× with `--gtest_repeat=3` (`build/ui_repeat.log`). The real `TeslaDM.exe` (Windows platform, not offscreen) opened its main window and exited cleanly with code 0 on WM_CLOSE.
+Builds have 0 compiler warnings at /W4 (checked again on 2026-11-11). In Phase 7 the UI suite also passed 3× with `--gtest_repeat=3` (`build/ui_repeat.log`). The real `TeslaDM.exe` (Windows platform, not offscreen) opened its main window and exited cleanly with code 0 on WM_CLOSE.
 - Integration tests need Python (`find_package(Python3)`); they start the probe server through CreateProcess on port 0.
 - UI tests: `tdm_ui_tests` (own `main` with `QApplication`, `QT_QPA_PLATFORM=offscreen`, offscreen plugin loaded from `TDM_QT_PLUGIN_DIR`, QSettings isolated under "TeslaDM-tests"). The end-to-end tests use the real Engine + probe server: add → progress → completed (SHA-256 checked, painted offscreen), pause/resume through the toolbar actions, coalescing under a busy UI thread, shutdown mid-download then resume in a new session, and Add-dialog validation.
 - Run one side only: `ctest --test-dir build/msvc-release -L engine` or `-L ui`.

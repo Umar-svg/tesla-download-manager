@@ -11,8 +11,8 @@ Qt 6.10.2 (Core, Gui, Widgets, Network, Svg and platform/style/TLS plugins)
   Qt is linked dynamically (Qt6*.dll). You may replace those DLLs with your own
   build of the same Qt version. Qt source code: https://download.qt.io/
   Files: licenses\LGPL-3.0.txt, licenses\GPL-3.0.txt
-  (official texts: https://www.gnu.org/licenses/lgpl-3.0.txt and
-   https://www.gnu.org/licenses/gpl-3.0.txt)
+  (the copies Qt ships in qtbase/LICENSES; official texts:
+   https://www.gnu.org/licenses/lgpl-3.0.txt and https://www.gnu.org/licenses/gpl-3.0.txt)
 
 OpenSSL 3.x (libssl-3-x64.dll, libcrypto-3-x64.dll)
   License: Apache License 2.0
