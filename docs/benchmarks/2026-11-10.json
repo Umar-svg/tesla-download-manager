@@ -1,0 +1,523 @@
+{
+ "meta": {
+  "date": "2026-11-10",
+  "reps": 3,
+  "hardware": {
+   "os": "Windows-11-10.0.26200-SP0",
+   "python": "3.15.2",
+   "logical_cpus": 12,
+   "cpu": "13th Gen Intel(R) Core(TM) i7-1355U",
+   "cores": 10,
+   "ram_gib": 15.7,
+   "disk": "NVMe BC901 NVMe SK hynix 1024GB (SSD)",
+   "curl": "curl 8.21.0 (Windows) libcurl/8.21.0 Schannel zlib/1.3.2 WinIDN WinLDAP"
+  },
+  "setup": "client and Python probe server on the same machine over loopback (127.0.0.1)"
+ },
+ "results": [
+  {
+   "scenario": "capped-64MiB",
+   "desc": "64 MiB, server caps each connection at 4 MB/s",
+   "tool": "tdm",
+   "connections": 1,
+   "max_active": 1,
+   "bytes": 67108864,
+   "runs": [
+    {
+     "seconds": 16.9429495,
+     "process_seconds": 17.11609399993904,
+     "bytes_done_seconds": 16.8501369,
+     "bytes": 67108864,
+     "max_connections": 1
+    },
+    {
+     "seconds": 16.9415526,
+     "process_seconds": 17.01474600005895,
+     "bytes_done_seconds": 16.8161959,
+     "bytes": 67108864,
+     "max_connections": 1
+    },
+    {
+     "seconds": 16.9420471,
+     "process_seconds": 17.02531179995276,
+     "bytes_done_seconds": 16.8168869,
+     "bytes": 67108864,
+     "max_connections": 1
+    }
+   ],
+   "median_s": 16.9420471,
+   "min_s": 16.9415526,
+   "max_s": 16.9429495,
+   "median_bytes_done_s": 16.8168869,
+   "observed_connections": 1
+  },
+  {
+   "scenario": "capped-64MiB",
+   "desc": "64 MiB, server caps each connection at 4 MB/s",
+   "tool": "tdm",
+   "connections": 2,
+   "max_active": 1,
+   "bytes": 67108864,
+   "runs": [
+    {
+     "seconds": 8.5192596,
+     "process_seconds": 8.599252599989995,
+     "bytes_done_seconds": 8.4258585,
+     "bytes": 67108864,
+     "max_connections": 2
+    },
+    {
+     "seconds": 8.5049103,
+     "process_seconds": 8.565028600161895,
+     "bytes_done_seconds": 8.4192382,
+     "bytes": 67108864,
+     "max_connections": 2
+    },
+    {
+     "seconds": 8.519176,
+     "process_seconds": 8.586397300008684,
+     "bytes_done_seconds": 8.4574631,
+     "bytes": 67108864,
+     "max_connections": 2
+    }
+   ],
+   "median_s": 8.519176,
+   "min_s": 8.5049103,
+   "max_s": 8.5192596,
+   "median_bytes_done_s": 8.4258585,
+   "observed_connections": 2
+  },
+  {
+   "scenario": "capped-64MiB",
+   "desc": "64 MiB, server caps each connection at 4 MB/s",
+   "tool": "tdm",
+   "connections": 4,
+   "max_active": 1,
+   "bytes": 67108864,
+   "runs": [
+    {
+     "seconds": 4.3326978,
+     "process_seconds": 4.394962799968198,
+     "bytes_done_seconds": 4.2235126,
+     "bytes": 67108864,
+     "max_connections": 4
+    },
+    {
+     "seconds": 4.3238802,
+     "process_seconds": 4.386819500010461,
+     "bytes_done_seconds": 4.2614231,
+     "bytes": 67108864,
+     "max_connections": 4
+    },
+    {
+     "seconds": 4.3257355,
+     "process_seconds": 4.392998100025579,
+     "bytes_done_seconds": 4.2183422,
+     "bytes": 67108864,
+     "max_connections": 4
+    }
+   ],
+   "median_s": 4.3257355,
+   "min_s": 4.3238802,
+   "max_s": 4.3326978,
+   "median_bytes_done_s": 4.2235126,
+   "observed_connections": 4
+  },
+  {
+   "scenario": "capped-64MiB",
+   "desc": "64 MiB, server caps each connection at 4 MB/s",
+   "tool": "tdm",
+   "connections": 8,
+   "max_active": 1,
+   "bytes": 67108864,
+   "runs": [
+    {
+     "seconds": 2.2132812,
+     "process_seconds": 2.273012900026515,
+     "bytes_done_seconds": 2.180932,
+     "bytes": 67108864,
+     "max_connections": 8
+    },
+    {
+     "seconds": 2.2144731,
+     "process_seconds": 2.2699716000352055,
+     "bytes_done_seconds": 2.1699348,
+     "bytes": 67108864,
+     "max_connections": 8
+    },
+    {
+     "seconds": 2.2138767,
+     "process_seconds": 2.2824814999476075,
+     "bytes_done_seconds": 2.1366395,
+     "bytes": 67108864,
+     "max_connections": 8
+    }
+   ],
+   "median_s": 2.2138767,
+   "min_s": 2.2132812,
+   "max_s": 2.2144731,
+   "median_bytes_done_s": 2.1699348,
+   "observed_connections": 8
+  },
+  {
+   "scenario": "capped-64MiB",
+   "desc": "64 MiB, server caps each connection at 4 MB/s",
+   "tool": "tdm",
+   "connections": 16,
+   "max_active": 1,
+   "bytes": 67108864,
+   "runs": [
+    {
+     "seconds": 1.2784299,
+     "process_seconds": 1.3421394999604672,
+     "bytes_done_seconds": 1.183029,
+     "bytes": 67108864,
+     "max_connections": 16
+    },
+    {
+     "seconds": 1.238339,
+     "process_seconds": 1.3025066000409424,
+     "bytes_done_seconds": 1.1763367,
+     "bytes": 67108864,
+     "max_connections": 16
+    },
+    {
+     "seconds": 1.2325654,
+     "process_seconds": 1.3046693000942469,
+     "bytes_done_seconds": 1.1537804,
+     "bytes": 67108864,
+     "max_connections": 16
+    }
+   ],
+   "median_s": 1.238339,
+   "min_s": 1.2325654,
+   "max_s": 1.2784299,
+   "median_bytes_done_s": 1.1763367,
+   "observed_connections": 16
+  },
+  {
+   "scenario": "capped-64MiB",
+   "desc": "64 MiB, server caps each connection at 4 MB/s",
+   "tool": "curl",
+   "connections": 1,
+   "max_active": 1,
+   "bytes": 67108864,
+   "runs": [
+    {
+     "seconds": 16.836253399960697,
+     "process_seconds": 16.836253399960697,
+     "bytes_done_seconds": null,
+     "bytes": 67108864,
+     "max_connections": 1
+    },
+    {
+     "seconds": 16.822079699952155,
+     "process_seconds": 16.822079699952155,
+     "bytes_done_seconds": null,
+     "bytes": 67108864,
+     "max_connections": 1
+    },
+    {
+     "seconds": 16.81727010011673,
+     "process_seconds": 16.81727010011673,
+     "bytes_done_seconds": null,
+     "bytes": 67108864,
+     "max_connections": 1
+    }
+   ],
+   "median_s": 16.822079699952155,
+   "min_s": 16.81727010011673,
+   "max_s": 16.836253399960697,
+   "median_bytes_done_s": null,
+   "observed_connections": 1
+  },
+  {
+   "scenario": "capped-latency-64MiB",
+   "desc": "64 MiB, 4 MB/s per connection, 100 ms before every response",
+   "tool": "tdm",
+   "connections": 1,
+   "max_active": 1,
+   "bytes": 67108864,
+   "runs": [
+    {
+     "seconds": 17.0027588,
+     "process_seconds": 17.06350059993565,
+     "bytes_done_seconds": 16.908931,
+     "bytes": 67108864,
+     "max_connections": 1
+    },
+    {
+     "seconds": 16.9932,
+     "process_seconds": 17.05304849985987,
+     "bytes_done_seconds": 16.9147115,
+     "bytes": 67108864,
+     "max_connections": 1
+    },
+    {
+     "seconds": 16.9874444,
+     "process_seconds": 17.054505200125277,
+     "bytes_done_seconds": 16.9407099,
+     "bytes": 67108864,
+     "max_connections": 1
+    }
+   ],
+   "median_s": 16.9932,
+   "min_s": 16.9874444,
+   "max_s": 17.0027588,
+   "median_bytes_done_s": 16.9147115,
+   "observed_connections": 1
+  },
+  {
+   "scenario": "capped-latency-64MiB",
+   "desc": "64 MiB, 4 MB/s per connection, 100 ms before every response",
+   "tool": "tdm",
+   "connections": 8,
+   "max_active": 1,
+   "bytes": 67108864,
+   "runs": [
+    {
+     "seconds": 2.4235712,
+     "process_seconds": 2.480750599876046,
+     "bytes_done_seconds": 2.3628734,
+     "bytes": 67108864,
+     "max_connections": 8
+    },
+    {
+     "seconds": 2.4233608,
+     "process_seconds": 2.478840900119394,
+     "bytes_done_seconds": 2.360511,
+     "bytes": 67108864,
+     "max_connections": 8
+    },
+    {
+     "seconds": 2.4223998,
+     "process_seconds": 2.480784500017762,
+     "bytes_done_seconds": 2.3601497,
+     "bytes": 67108864,
+     "max_connections": 8
+    }
+   ],
+   "median_s": 2.4233608,
+   "min_s": 2.4223998,
+   "max_s": 2.4235712,
+   "median_bytes_done_s": 2.360511,
+   "observed_connections": 8
+  },
+  {
+   "scenario": "capped-latency-64MiB",
+   "desc": "64 MiB, 4 MB/s per connection, 100 ms before every response",
+   "tool": "curl",
+   "connections": 1,
+   "max_active": 1,
+   "bytes": 67108864,
+   "runs": [
+    {
+     "seconds": 16.911255000159144,
+     "process_seconds": 16.911255000159144,
+     "bytes_done_seconds": null,
+     "bytes": 67108864,
+     "max_connections": 1
+    },
+    {
+     "seconds": 16.914059799863026,
+     "process_seconds": 16.914059799863026,
+     "bytes_done_seconds": null,
+     "bytes": 67108864,
+     "max_connections": 1
+    },
+    {
+     "seconds": 16.915375899989158,
+     "process_seconds": 16.915375899989158,
+     "bytes_done_seconds": null,
+     "bytes": 67108864,
+     "max_connections": 1
+    }
+   ],
+   "median_s": 16.914059799863026,
+   "min_s": 16.911255000159144,
+   "max_s": 16.915375899989158,
+   "median_bytes_done_s": null,
+   "observed_connections": 1
+  },
+  {
+   "scenario": "unthrottled-1GiB",
+   "desc": "1 GiB, no server throttle (loopback; Python server is the ceiling)",
+   "tool": "tdm",
+   "connections": 1,
+   "max_active": 1,
+   "bytes": 1073741824,
+   "runs": [
+    {
+     "seconds": 4.7221139,
+     "process_seconds": 4.779071300057694,
+     "bytes_done_seconds": 3.0494932,
+     "bytes": 1073741824,
+     "max_connections": 1
+    },
+    {
+     "seconds": 4.3806808,
+     "process_seconds": 4.481567799812183,
+     "bytes_done_seconds": 2.8283569,
+     "bytes": 1073741824,
+     "max_connections": 1
+    },
+    {
+     "seconds": 4.0364146,
+     "process_seconds": 4.104909900110215,
+     "bytes_done_seconds": 2.5955607,
+     "bytes": 1073741824,
+     "max_connections": 1
+    }
+   ],
+   "median_s": 4.3806808,
+   "min_s": 4.0364146,
+   "max_s": 4.7221139,
+   "median_bytes_done_s": 2.8283569,
+   "observed_connections": 1
+  },
+  {
+   "scenario": "unthrottled-1GiB",
+   "desc": "1 GiB, no server throttle (loopback; Python server is the ceiling)",
+   "tool": "tdm",
+   "connections": 8,
+   "max_active": 1,
+   "bytes": 1073741824,
+   "runs": [
+    {
+     "seconds": 3.0573623,
+     "process_seconds": 3.1316476999782026,
+     "bytes_done_seconds": 1.5561425,
+     "bytes": 1073741824,
+     "max_connections": 8
+    },
+    {
+     "seconds": 3.1411706,
+     "process_seconds": 3.2105928999371827,
+     "bytes_done_seconds": 1.6822702,
+     "bytes": 1073741824,
+     "max_connections": 8
+    },
+    {
+     "seconds": 3.2557917,
+     "process_seconds": 3.369434100110084,
+     "bytes_done_seconds": 1.736169,
+     "bytes": 1073741824,
+     "max_connections": 8
+    }
+   ],
+   "median_s": 3.1411706,
+   "min_s": 3.0573623,
+   "max_s": 3.2557917,
+   "median_bytes_done_s": 1.6822702,
+   "observed_connections": 8
+  },
+  {
+   "scenario": "unthrottled-1GiB",
+   "desc": "1 GiB, no server throttle (loopback; Python server is the ceiling)",
+   "tool": "curl",
+   "connections": 1,
+   "max_active": 1,
+   "bytes": 1073741824,
+   "runs": [
+    {
+     "seconds": 1.8354575000703335,
+     "process_seconds": 1.8354575000703335,
+     "bytes_done_seconds": null,
+     "bytes": 1073741824,
+     "max_connections": 1
+    },
+    {
+     "seconds": 2.1005317999515682,
+     "process_seconds": 2.1005317999515682,
+     "bytes_done_seconds": null,
+     "bytes": 1073741824,
+     "max_connections": 1
+    },
+    {
+     "seconds": 1.795828799949959,
+     "process_seconds": 1.795828799949959,
+     "bytes_done_seconds": null,
+     "bytes": 1073741824,
+     "max_connections": 1
+    }
+   ],
+   "median_s": 1.8354575000703335,
+   "min_s": 1.795828799949959,
+   "max_s": 2.1005317999515682,
+   "median_bytes_done_s": null,
+   "observed_connections": 1
+  },
+  {
+   "scenario": "many-small",
+   "desc": "100 files x 1 MiB, 4 MB/s per connection, 4 at a time",
+   "tool": "tdm",
+   "connections": 8,
+   "max_active": 4,
+   "bytes": 104857600,
+   "runs": [
+    {
+     "seconds": 7.2966344,
+     "process_seconds": 7.397424899972975,
+     "bytes_done_seconds": 7.2966343,
+     "bytes": 104857600,
+     "max_connections": 4
+    },
+    {
+     "seconds": 7.0998903,
+     "process_seconds": 7.17929430003278,
+     "bytes_done_seconds": 7.0998902,
+     "bytes": 104857600,
+     "max_connections": 4
+    },
+    {
+     "seconds": 7.1045252,
+     "process_seconds": 7.187099900096655,
+     "bytes_done_seconds": 7.1045251,
+     "bytes": 104857600,
+     "max_connections": 4
+    }
+   ],
+   "median_s": 7.1045252,
+   "min_s": 7.0998903,
+   "max_s": 7.2966344,
+   "median_bytes_done_s": 7.1045251,
+   "observed_connections": 4
+  },
+  {
+   "scenario": "many-small",
+   "desc": "100 files x 1 MiB, 4 MB/s per connection, 4 at a time",
+   "tool": "curl",
+   "connections": 1,
+   "max_active": 4,
+   "bytes": 104857600,
+   "runs": [
+    {
+     "seconds": 6.734365500044078,
+     "process_seconds": 6.734365500044078,
+     "bytes_done_seconds": null,
+     "bytes": 104857600,
+     "max_connections": 4
+    },
+    {
+     "seconds": 6.730626699980348,
+     "process_seconds": 6.730626699980348,
+     "bytes_done_seconds": null,
+     "bytes": 104857600,
+     "max_connections": 4
+    },
+    {
+     "seconds": 6.758242100011557,
+     "process_seconds": 6.758242100011557,
+     "bytes_done_seconds": null,
+     "bytes": 104857600,
+     "max_connections": 4
+    }
+   ],
+   "median_s": 6.734365500044078,
+   "min_s": 6.730626699980348,
+   "max_s": 6.758242100011557,
+   "median_bytes_done_s": null,
+   "observed_connections": 4
+  }
+ ]
+}

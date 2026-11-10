@@ -1,0 +1,12 @@
+{
+  "name": "tesla-download-manager",
+  "version": "0.1.0",
+  "builtin-baseline": "5cad485d1ddb649c8fa1022bf0b3908555e6e6ba",
+  "dependencies": [
+    "asio",
+    "openssl",
+    "sqlite3",
+    "nlohmann-json",
+    "gtest"
+  ]
+}

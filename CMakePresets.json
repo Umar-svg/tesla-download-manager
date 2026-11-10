@@ -1,0 +1,31 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "msvc-base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-windows",
+        "CMAKE_PREFIX_PATH": "$env{TDM_QT_DIR}",
+        "CMAKE_CXX_COMPILER": "cl"
+      },
+      "environment": {
+        "VCPKG_ROOT": "C:/vcpkg",
+        "TDM_QT_DIR": "C:/Qt/6.10.2/msvc2022_64"
+      }
+    },
+    { "name": "msvc-debug", "inherits": "msvc-base", "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" } },
+    { "name": "msvc-release", "inherits": "msvc-base", "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" } }
+  ],
+  "buildPresets": [
+    { "name": "msvc-debug", "configurePreset": "msvc-debug" },
+    { "name": "msvc-release", "configurePreset": "msvc-release" }
+  ],
+  "testPresets": [
+    { "name": "msvc-debug", "configurePreset": "msvc-debug", "output": { "outputOnFailure": true } },
+    { "name": "msvc-release", "configurePreset": "msvc-release", "output": { "outputOnFailure": true } }
+  ]
+}

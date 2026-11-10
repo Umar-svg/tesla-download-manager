@@ -1,0 +1,7 @@
+/build/
+/out/
+/vcpkg_installed/
+*.tdmpart
+docs/research/evidence/probe.jsonl
+.vs/
+CMakeUserPresets.json

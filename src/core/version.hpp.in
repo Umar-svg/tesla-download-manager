@@ -1,0 +1,7 @@
+#pragma once
+
+namespace tdm {
+inline constexpr const char* kProductName = "Tesla Download Manager";
+inline constexpr const char* kVersion = "@PROJECT_VERSION@";
+inline constexpr const char* kUserAgent = "TeslaDM/@PROJECT_VERSION@";
+}  // namespace tdm

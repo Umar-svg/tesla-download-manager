@@ -1,0 +1,232 @@
+[
+ {
+  "conn": 53420,
+  "method": "GET",
+  "path": "/f/idmprobe1.bin?size=33554432&rate=1500000",
+  "http": "HTTP/1.1",
+  "headers": {
+   "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko",
+   "Host": "127.0.0.1:8765",
+   "Accept": "*/*",
+   "Accept-Encoding": "identity",
+   "Accept-Language": "en-PK",
+   "Accept-Charset": "*",
+   "Referer": "http://127.0.0.1:8765/f/"
+  },
+  "status": 200,
+  "range": [
+   0,
+   33554431
+  ],
+  "version": 1,
+  "aborted": true,
+  "sent": 245760,
+  "secs": 0.165,
+  "t": 24.1455
+ },
+ {
+  "conn": 53425,
+  "method": "GET",
+  "path": "/f/idmprobe1.bin?size=33554432&rate=1500000",
+  "http": "HTTP/1.1",
+  "headers": {
+   "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko",
+   "Host": "127.0.0.1:8765",
+   "Accept": "*/*",
+   "Accept-Encoding": "identity",
+   "Accept-Language": "en-PK",
+   "Accept-Charset": "*",
+   "Range": "bytes=29401087-33554431",
+   "Referer": "http://127.0.0.1:8765/f/"
+  },
+  "status": 206,
+  "range": [
+   29401087,
+   33554431
+  ],
+  "version": 1,
+  "sent": 4153345,
+  "secs": 2.769,
+  "t": 26.803
+ },
+ {
+  "conn": 53426,
+  "method": "GET",
+  "path": "/f/idmprobe1.bin?size=33554432&rate=1500000",
+  "http": "HTTP/1.1",
+  "headers": {
+   "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko",
+   "Host": "127.0.0.1:8765",
+   "Accept": "*/*",
+   "Accept-Encoding": "identity",
+   "Accept-Language": "en-PK",
+   "Accept-Charset": "*",
+   "Range": "bytes=12753050-16905827",
+   "Referer": "http://127.0.0.1:8765/f/"
+  },
+  "status": 206,
+  "range": [
+   12753050,
+   16905827
+  ],
+  "version": 1,
+  "sent": 4152778,
+  "secs": 2.769,
+  "t": 26.8035
+ },
+ {
+  "conn": 53427,
+  "method": "GET",
+  "path": "/f/idmprobe1.bin?size=33554432&rate=1500000",
+  "http": "HTTP/1.1",
+  "headers": {
+   "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko",
+   "Host": "127.0.0.1:8765",
+   "Accept": "*/*",
+   "Accept-Encoding": "identity",
+   "Accept-Language": "en-PK",
+   "Accept-Charset": "*",
+   "Range": "bytes=4447624-16905827",
+   "Referer": "http://127.0.0.1:8765/f/"
+  },
+  "status": 206,
+  "range": [
+   4447624,
+   16905827
+  ],
+  "version": 1,
+  "aborted": true,
+  "sent": 4186744,
+  "secs": 2.792,
+  "t": 26.8278
+ },
+ {
+  "conn": 53421,
+  "method": "GET",
+  "path": "/f/idmprobe1.bin?size=33554432&rate=1500000",
+  "http": "HTTP/1.1",
+  "headers": {
+   "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko",
+   "Host": "127.0.0.1:8765",
+   "Accept": "*/*",
+   "Accept-Encoding": "identity",
+   "Accept-Language": "en-PK",
+   "Accept-Charset": "*",
+   "Range": "bytes=233600-33554431",
+   "Referer": "http://127.0.0.1:8765/f/"
+  },
+  "status": 206,
+  "range": [
+   233600,
+   33554431
+  ],
+  "version": 1,
+  "aborted": true,
+  "sent": 4255616,
+  "secs": 2.838,
+  "t": 26.832
+ },
+ {
+  "conn": 53423,
+  "method": "GET",
+  "path": "/f/idmprobe1.bin?size=33554432&rate=1500000",
+  "http": "HTTP/1.1",
+  "headers": {
+   "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko",
+   "Host": "127.0.0.1:8765",
+   "Accept": "*/*",
+   "Accept-Encoding": "identity",
+   "Accept-Language": "en-PK",
+   "Accept-Charset": "*",
+   "Range": "bytes=25230097-33554431",
+   "Referer": "http://127.0.0.1:8765/f/"
+  },
+  "status": 206,
+  "range": [
+   25230097,
+   33554431
+  ],
+  "version": 1,
+  "aborted": true,
+  "sent": 4211951,
+  "secs": 2.809,
+  "t": 26.8345
+ },
+ {
+  "conn": 53424,
+  "method": "GET",
+  "path": "/f/idmprobe1.bin?size=33554432&rate=1500000",
+  "http": "HTTP/1.1",
+  "headers": {
+   "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko",
+   "Host": "127.0.0.1:8765",
+   "Accept": "*/*",
+   "Accept-Encoding": "identity",
+   "Accept-Language": "en-PK",
+   "Accept-Charset": "*",
+   "Range": "bytes=8600337-16905827",
+   "Referer": "http://127.0.0.1:8765/f/"
+  },
+  "status": 206,
+  "range": [
+   8600337,
+   16905827
+  ],
+  "version": 1,
+  "aborted": true,
+  "sent": 4211951,
+  "secs": 2.809,
+  "t": 26.8407
+ },
+ {
+  "conn": 53422,
+  "method": "GET",
+  "path": "/f/idmprobe1.bin?size=33554432&rate=1500000",
+  "http": "HTTP/1.1",
+  "headers": {
+   "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko",
+   "Host": "127.0.0.1:8765",
+   "Accept": "*/*",
+   "Accept-Encoding": "identity",
+   "Accept-Language": "en-PK",
+   "Accept-Charset": "*",
+   "Range": "bytes=16905764-33554431",
+   "Referer": "http://127.0.0.1:8765/f/"
+  },
+  "status": 206,
+  "range": [
+   16905764,
+   33554431
+  ],
+  "version": 1,
+  "aborted": true,
+  "sent": 4245980,
+  "secs": 2.831,
+  "t": 26.8548
+ },
+ {
+  "conn": 53428,
+  "method": "GET",
+  "path": "/f/idmprobe1.bin?size=33554432&rate=1500000",
+  "http": "HTTP/1.1",
+  "headers": {
+   "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko",
+   "Host": "127.0.0.1:8765",
+   "Accept": "*/*",
+   "Accept-Encoding": "identity",
+   "Accept-Language": "en-PK",
+   "Accept-Charset": "*",
+   "Range": "bytes=21151112-25230160",
+   "Referer": "http://127.0.0.1:8765/f/"
+  },
+  "status": 206,
+  "range": [
+   21151112,
+   25230160
+  ],
+  "version": 1,
+  "sent": 4079049,
+  "secs": 2.72,
+  "t": 26.8702
+ }
+]

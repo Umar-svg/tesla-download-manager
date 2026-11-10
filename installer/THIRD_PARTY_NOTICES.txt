@@ -1,0 +1,37 @@
+Tesla Download Manager - third-party software notices
+=====================================================
+
+Tesla Download Manager includes or dynamically links the following third-party
+components. Each is used under its own license; the full license texts are in
+the "licenses" folder next to this file.
+
+Qt 6.10.2 (Core, Gui, Widgets, Network, Svg and platform/style/TLS plugins)
+  License: GNU Lesser General Public License v3 (LGPL-3.0), which builds on the
+  GNU General Public License v3 (GPL-3.0).
+  Qt is linked dynamically (Qt6*.dll). You may replace those DLLs with your own
+  build of the same Qt version. Qt source code: https://download.qt.io/
+  Files: licenses\LGPL-3.0.txt, licenses\GPL-3.0.txt
+  (official texts: https://www.gnu.org/licenses/lgpl-3.0.txt and
+   https://www.gnu.org/licenses/gpl-3.0.txt)
+
+OpenSSL 3.x (libssl-3-x64.dll, libcrypto-3-x64.dll)
+  License: Apache License 2.0
+  File: licenses\openssl.txt
+
+SQLite (sqlite3.dll)
+  License: public domain
+  File: licenses\sqlite3.txt
+
+Asio (header-only, compiled into the program)
+  License: Boost Software License 1.0
+  File: licenses\asio.txt
+
+nlohmann/json (header-only, compiled into the program)
+  License: MIT
+  File: licenses\nlohmann-json.txt
+
+Microsoft Visual C++ runtime (msvcp140*.dll, vcruntime140*.dll, concrt140.dll)
+  Redistributed under the Microsoft Visual Studio redistributable terms.
+
+The Tesla Download Manager code itself: the license has not been chosen yet
+(decision pending with the project owner).
