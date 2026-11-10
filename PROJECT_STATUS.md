@@ -184,7 +184,7 @@ Verification on 2026-11-11:
   - tests: two local sessions on 127.0.0.1 (create a torrent, seed, leech via connect_peer and via magnet metadata), SHA-256 compared
 - Video sites (after torrents): optional yt-dlp integration. Installed via winget here:
   - yt-dlp: `%LOCALAPPDATA%\Microsoft\WinGet\Packages\yt-dlp.yt-dlp_Microsoft.Winget.Source_8wekyb3d8bbwe\yt-dlp.exe`
-  - ffmpeg: `...\Gyan.FFmpeg_...fmpeg-9.0.2-full_buildinfmpeg.exe` (the yt-dlp package also brought its own ffmpeg)
+  - ffmpeg: `%LOCALAPPDATA%\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-9.0.2-full_build\bin\ffmpeg.exe` (the yt-dlp package also brought its own ffmpeg)
   - Discovery order: settings path → PATH → WinGet Packages. Never DRM services; show a rights reminder.
 - App icon: waiting for the owner's own design (square PNG ≥ 512 px, transparent; not Tesla's logo). It goes into the exe (.rc + .ico), the window/tray (qrc) and the installer (SetupIconFile).
 - Owner's earlier wish: "better than IDM", to be shown with measured numbers only.
